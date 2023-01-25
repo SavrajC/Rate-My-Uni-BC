@@ -1,0 +1,24 @@
+service: assignment-tracker
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: ${opt:stage, 'dev'}
+  region: us-west-2
+  tracing:
+    lambda: true
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /assign
+          method: get
+  hello:
+    handler: createAssignment.createAssignment
+    events:
+      - httpApi:
+          path: /assign
+          method: post

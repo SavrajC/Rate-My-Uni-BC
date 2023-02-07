@@ -1,0 +1,17 @@
+Resources:
+  ReviewsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:provider.environment.stage}-reviews
+      AttributeDefinitions:
+        - AttributeName: reviewId
+          AttributeType: S
+        - AttributeName: timeCreated
+          AttributeType: N
+      KeySchema:
+        - AttributeName: reviewId
+          KeyType: HASH
+        - AttributeName: timeCreated
+          KeyType: RANGE
+      # Set the capacity to auto-scale
+      BillingMode: PAY_PER_REQUEST

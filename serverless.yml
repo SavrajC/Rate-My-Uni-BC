@@ -3,11 +3,27 @@ frameworkVersion: "3"
 
 provider:
   name: aws
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        Fn::GetAtt: [ReviewsTable, Arn]
   runtime: nodejs16.x
-  stage: ${opt:stage, 'dev'}
+
   region: us-west-2
   tracing:
     lambda: true
+  environment:
+    stage: ${opt:stage, 'dev'}
+    TABLE_NAME: ${self:provider.environment.stage}-reviews
+    #tableName: ${self:stage}-reviews
 
 functions:
   hello:
@@ -16,9 +32,11 @@ functions:
       - httpApi:
           path: /assign
           method: get
-  hello:
+  createAssignment:
     handler: createAssignment.createAssignment
     events:
       - httpApi:
           path: /assign
           method: post
+resources:
+  - ${file(resources/reviews.yml)}

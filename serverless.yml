@@ -26,8 +26,8 @@ provider:
     #tableName: ${self:stage}-reviews
 
 functions:
-  hello:
-    handler: handler.hello
+  getReviews:
+    handler: handler.getReviews
     events:
       - httpApi:
           path: /assign

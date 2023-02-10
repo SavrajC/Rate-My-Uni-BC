@@ -7,11 +7,18 @@ module.exports.getReviews = async (event) => {
     TableName: tableName,
   };
   console.log(tableName);
+
   try {
     let results = await dynamoDb.scan(params).promise();
+    console.log(JSON.stringify(results));
     return {
       statusCode: 200,
-      body: results,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+      },
+
+      body: JSON.stringify(results.Items, null, 2),
     };
   } catch (err) {
     console.log("Error was captured");

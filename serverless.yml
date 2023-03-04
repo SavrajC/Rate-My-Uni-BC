@@ -1,4 +1,4 @@
-service: assignment-tracker
+service: Rate-My-Uni-BC
 frameworkVersion: "3"
 
 provider:

@@ -4,14 +4,14 @@ Resources:
     Properties:
       TableName: ${self:provider.environment.stage}-reviews
       AttributeDefinitions:
+        - AttributeName: uniId
+          AttributeType: S
         - AttributeName: reviewId
           AttributeType: S
-        - AttributeName: timeCreated
-          AttributeType: N
       KeySchema:
-        - AttributeName: reviewId
+        - AttributeName: uniId
           KeyType: HASH
-        - AttributeName: timeCreated
+        - AttributeName: reviewId
           KeyType: RANGE
       # Set the capacity to auto-scale
       BillingMode: PAY_PER_REQUEST

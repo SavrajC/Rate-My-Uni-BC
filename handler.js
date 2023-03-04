@@ -5,11 +5,15 @@ const tableName = process.env.TABLE_NAME;
 module.exports.getReviews = async (event) => {
   var params = {
     TableName: tableName,
+    KeyConditionExpression: "uniId = :uniId",
+    ExpressionAttributeValues: {
+      ":uniId": "KPU",
+    },
   };
   console.log(tableName);
 
   try {
-    let results = await dynamoDb.scan(params).promise();
+    let results = await dynamoDb.query(params).promise();
     console.log(JSON.stringify(results));
     return {
       statusCode: 200,
